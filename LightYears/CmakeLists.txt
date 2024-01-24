@@ -1,3 +1,18 @@
 add_executable(${LIGHT_YEARS_GAME_TARGET_NANE}
 	${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/include/framwork/Application.h
+	${CMAKE_CURRENT_SOURCE_DIR}/src/framwork/Application.cpp
+)
+
+target_link_libraries(${LIGHT_YEARS_GAME_TARGET_NANE} PUBLIC sfml-graphics)
+target_link_libraries(${LIGHT_YEARS_GAME_TARGET_NANE} PUBLIC sfml-audio)
+target_link_libraries(${LIGHT_YEARS_GAME_TARGET_NANE} PUBLIC sfml-window)
+target_link_libraries(${LIGHT_YEARS_GAME_TARGET_NANE} PUBLIC sfml-system)
+
+add_custom_command(TARGET ${LIGHT_YEARS_GAME_TARGET_NANE}
+  POST_BUILD
+  COMMAND 
+  ${CMAKE_COMMAND} -E copy_if_different
+  $<TARGET_FILE:sfml-window>
+  $<TARGET_FILE_DIR:${LIGHT_YEARS_GAME_TARGET_NANE}>
 )
