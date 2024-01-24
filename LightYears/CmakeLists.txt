@@ -1,7 +1,9 @@
 add_executable(${LIGHT_YEARS_GAME_TARGET_NANE}
-	${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/include/framwork/Application.h
 	${CMAKE_CURRENT_SOURCE_DIR}/src/framwork/Application.cpp
+
+	${CMAKE_CURRENT_SOURCE_DIR}/include/EntryPoint.h
+	${CMAKE_CURRENT_SOURCE_DIR}/src/EntryPoint.cpp
 )
 
 target_include_directories(${LIGHT_YEARS_GAME_TARGET_NANE} PUBLIC
