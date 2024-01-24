@@ -1,23 +1,14 @@
 #include<iostream>
 #include<SFML/Graphics.hpp>
+#include "framwork/Application.h"
 
 using namespace std;
 
 int main()
 {
-	sf::RenderWindow renderWindow{ sf::VideoMode(100,100), "MyWindow"};
+	//Allocation on the heap.
+	ly::Application* app = new ly::Application();
+	app->Run();
 
-	while (renderWindow.isOpen())
-	{
-		sf::Event windowEvent;
-		while (renderWindow.pollEvent(windowEvent))
-		{
-			if (windowEvent.type == sf::Event::EventType::Closed)
-			{
-				renderWindow.close();
-			}
-		}
-	}
-	cout << "Hello world" << endl;
-	return 0;
+	//return 0;
 }
