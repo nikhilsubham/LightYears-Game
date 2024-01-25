@@ -1,0 +1,23 @@
+add_executable(${LIGHT_YEARS_GAME_TARGET_NANE} 
+	${CMAKE_CURRENT_SOURCE_DIR}/include/gameFramwork/GameApplication.h
+	${CMAKE_CURRENT_SOURCE_DIR}/src/gameFramwork/GameApplication.cpp
+)
+
+target_include_directories(${LIGHT_YEARS_GAME_TARGET_NANE} PUBLIC
+	${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+target_link_libraries(${LIGHT_YEARS_GAME_TARGET_NANE} PUBLIC LightYearsEngine)
+	
+
+function(CopyLibDirToTarget LIB_NAME TARGET_NAME)
+	add_custom_command(TARGET ${TARGET_NAME}
+	POST_BUILD
+	COMMAND
+	${CMAKE_COMMAND} -E copy_directory
+	$<TARGET_FILE_DIR:${LIB_NAME}>
+	$<TARGET_FILE_DIR:${TARGET_NAME}>
+	)
+endfunction()
+
+CopyLibDirToTarget(LightYearsEngine ${LIGHT_YEARS_GAME_TARGET_NANE})
