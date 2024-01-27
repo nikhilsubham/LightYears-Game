@@ -4,14 +4,15 @@
 
 namespace ly
 {
-	Application::Application()
-		: mWindow{ sf::VideoMode(800,900), "Light Years" },
-		mTargetFrameRate{60.f},
+	Application::Application(unsigned int windowWidth, unsigned int windowHeight, const std::string& title, sf::Uint32 style)
+		: mWindow{ sf::VideoMode(windowWidth,windowHeight),title, style},
+		mTargetFrameRate{ 60.f },
 		mTickClock{},
-		currentWorld{nullptr}
+		currentWorld{ nullptr }
 	{
-		
+
 	}
+
 	void Application::Run()
 	{
 		mTickClock.restart();
@@ -39,6 +40,7 @@ namespace ly
 
 	void Application::TickInternal(float deltaTime)
 	{
+		LOG("TickInternal class of Applocation.cpp file");
 		Tick(deltaTime);
 		if(currentWorld)
 		{
@@ -64,7 +66,7 @@ namespace ly
 		mWindow.draw(rect);
 	}
 
-	void Application::Tick(float deltaTime)
+	void Application::Tick(float deltaTime)  //Function overriden in GameApplication class.
 	{
 
 	}

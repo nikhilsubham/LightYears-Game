@@ -11,6 +11,9 @@ add_library(${LIGHT_YEARS_ENGINE_TARGET_NANE} STATIC
 	${CMAKE_CURRENT_SOURCE_DIR}/include/framwork/Actor.h
 	${CMAKE_CURRENT_SOURCE_DIR}/src/framwork/Actor.cpp
 
+	${CMAKE_CURRENT_SOURCE_DIR}/include/framwork/Object.h
+	${CMAKE_CURRENT_SOURCE_DIR}/src/framwork/Object.cpp
+
 	${CMAKE_CURRENT_SOURCE_DIR}/include/EntryPoint.h
 	${CMAKE_CURRENT_SOURCE_DIR}/src/EntryPoint.cpp
 )

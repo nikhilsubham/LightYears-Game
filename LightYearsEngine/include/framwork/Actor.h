@@ -1,14 +1,15 @@
 #pragma once
+#include "framwork/Object.h"
 
 namespace ly
 {
 	class World;
-	class Actor
+	class Actor : public Object
 	{
 	public:
 		Actor(World* owningWorld);
+		virtual ~Actor();
 		void BeginPlayInternal();
-		//void TickInternal(float deltaTime);
 		virtual void BeginPlay();
 		virtual void Tick(float deltaTime);
 
