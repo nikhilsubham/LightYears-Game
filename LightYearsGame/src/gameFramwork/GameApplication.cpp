@@ -17,6 +17,7 @@ namespace ly
 		weak<World> newWorld = LoadWorld<World>();
 		newWorld.lock()->SpawnActor<Actor>();
 		actorToDestroy = newWorld.lock()->SpawnActor<Actor>();
+		actorToDestroy.lock()->setTexture("D:\\Game_Development\\LightYears\\LightYearsGame\\assets\\assets\\SpaceShooterRedux\\PNG\\playerShip1_blue.png");
 		counter = 0;
 	}
 

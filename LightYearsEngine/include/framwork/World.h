@@ -11,6 +11,7 @@ namespace ly
 		World(Application* owningApp);
 		void beginPlayInternal();
 		void TickInternal(float deltaTime);
+		void Render(sf::RenderWindow& window);
 
 		virtual ~World();
 

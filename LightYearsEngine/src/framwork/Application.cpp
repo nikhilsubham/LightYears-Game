@@ -59,11 +59,10 @@ namespace ly
 
 	void Application::Render()
 	{
-		sf::RectangleShape rect{ sf::Vector2f{100,100} };
-		rect.setFillColor(sf::Color::Yellow);
-		rect.setOrigin(50, 50);
-		rect.setPosition(mWindow.getSize().x / 2.f, mWindow.getSize().y / 2.f);
-		mWindow.draw(rect);
+		if (currentWorld)
+		{
+			currentWorld->Render(mWindow);
+		}
 	}
 
 	void Application::Tick(float deltaTime)  //Function overriden in GameApplication class.
