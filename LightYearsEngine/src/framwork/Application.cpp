@@ -41,6 +41,11 @@ namespace ly
 		}
 	}
 
+	sf::Vector2u Application::GetWindowSize() const
+	{
+		return mWindow.getSize();
+	}
+
 	void Application::TickInternal(float deltaTime)
 	{
 		//LOG("TickInternal class of Applocation.cpp file");
