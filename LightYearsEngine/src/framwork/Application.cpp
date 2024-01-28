@@ -1,14 +1,17 @@
 #include "framwork/Application.h"
 #include "framwork/Core.h"
 #include "framwork/World.h"
+#include "framwork/AssetManager.h"
 
 namespace ly
 {
 	Application::Application(unsigned int windowWidth, unsigned int windowHeight, const std::string& title, sf::Uint32 style)
-		: mWindow{ sf::VideoMode(windowWidth,windowHeight),title, style},
+		: mWindow{ sf::VideoMode(windowWidth,windowHeight),title, style },
 		mTargetFrameRate{ 60.f },
 		mTickClock{},
-		currentWorld{ nullptr }
+		currentWorld{ nullptr },
+		mCleanCycleClock{ },
+		mCleanCycleInterval{ 2.f }
 	{
 
 	}
@@ -40,12 +43,17 @@ namespace ly
 
 	void Application::TickInternal(float deltaTime)
 	{
-		LOG("TickInternal class of Applocation.cpp file");
+		//LOG("TickInternal class of Applocation.cpp file");
 		Tick(deltaTime);
 		if(currentWorld)
 		{
 			currentWorld->beginPlayInternal();
 			currentWorld->TickInternal(deltaTime);
+		}
+		if (mCleanCycleClock.getElapsedTime().asSeconds() >= mCleanCycleInterval)
+		{
+			mCleanCycleClock.restart();
+			AssetManager::get().CleanCycle();
 		}
 	}
 
