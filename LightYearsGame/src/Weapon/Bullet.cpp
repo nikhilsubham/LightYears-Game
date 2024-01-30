@@ -27,6 +27,10 @@ namespace ly
 	{
 		Actor::Tick(deltaTime);
 		Move(deltaTime);
+		if (IsActorOutofWindowBounds())
+		{
+			Destroy();
+		}
 	}
 
 	void Bullet::BeginPlay()
