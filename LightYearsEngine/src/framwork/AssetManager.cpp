@@ -2,18 +2,18 @@
 
 namespace ly
 {
-	unique<AssetManager> AssetManager::assetManager{ nullptr };
+	std::unique_ptr<AssetManager> AssetManager::assetManager{ nullptr };
 
 	AssetManager& AssetManager::get()
 	{
 		if (!assetManager)
 		{
-			assetManager = std::move(unique<AssetManager>(new AssetManager));
+			assetManager = std::move(std::unique_ptr<AssetManager>(new AssetManager));
 		}
 		return *assetManager;
 	}
 
-	shared<sf::Texture> AssetManager::LoadTexture(const std::string& path)
+	std::shared_ptr<sf::Texture> AssetManager::LoadTexture(const std::string& path)
 	{
 		auto found = mLoadedTextureMap.find(path);
 		if (found != mLoadedTextureMap.end())
@@ -21,13 +21,13 @@ namespace ly
 			return found->second;
 		}
 
-		shared<sf::Texture> newTexture(new sf::Texture);
+		std::shared_ptr<sf::Texture> newTexture = std::make_shared<sf::Texture>();
 		if (newTexture->loadFromFile(mRootDirectory+path))
 		{
 			mLoadedTextureMap.insert({path, newTexture});
 			return newTexture;
 		}
-		return shared<sf::Texture>{nullptr};
+		return nullptr;
 	}
 
 	void AssetManager::CleanCycle()

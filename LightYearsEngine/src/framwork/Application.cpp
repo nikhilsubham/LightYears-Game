@@ -48,7 +48,6 @@ namespace ly
 
 	void Application::TickInternal(float deltaTime)
 	{
-		//LOG("TickInternal class of Applocation.cpp file");
 		Tick(deltaTime);
 		if(currentWorld)
 		{

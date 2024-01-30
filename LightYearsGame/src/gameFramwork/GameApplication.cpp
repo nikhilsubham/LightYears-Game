@@ -18,9 +18,9 @@ namespace ly
 		:Application(650, 900, "Light Years", sf::Style::Titlebar | sf::Style::Close)
 	{
 		AssetManager::get().SetAssetRootDirectory(GetResourceDir());
-		weak<World> newWorld = LoadWorld<World>();
+		std::weak_ptr<World> newWorld = LoadWorld<World>();
 		newWorld.lock()->SpawnActor<Actor>();
-		testPlayerSpceship = newWorld.lock()->SpawnActor<PlayerSpaceship>();
+		std::weak_ptr<PlayerSpaceship>  testPlayerSpceship = newWorld.lock()->SpawnActor<PlayerSpaceship>();
 		//testPlayerSpceship.lock()->setTexture("SpaceShooterRedux\\PNG\\playerShip1_blue.png");
 		testPlayerSpceship.lock()->SetActorLocation(sf::Vector2f(325.f, 450.f));
 		testPlayerSpceship.lock()->SetActorRotation(360.f);

@@ -1,7 +1,6 @@
 #pragma once
 #include<SFML/Graphics.hpp>
 #include<framwork/Core.h>
-#include<framwork/World.h>
 
 namespace ly
 {
@@ -13,9 +12,9 @@ namespace ly
 		void Run();
 
 		template<typename WorldType>
-		weak<WorldType> LoadWorld()
+		std::weak_ptr<WorldType> LoadWorld()
 		{
-			shared<WorldType> newWorld{ new WorldType{this} };
+			std::shared_ptr<WorldType> newWorld = std::make_shared<WorldType>(this);
 			currentWorld = newWorld;
 			return newWorld;
 		}
@@ -33,7 +32,7 @@ namespace ly
 		float mTargetFrameRate;
 		sf::Clock mTickClock;
 
-		shared<World> currentWorld;
+		std::shared_ptr<World> currentWorld;
 		sf::Clock mCleanCycleClock;
 		float mCleanCycleInterval;
 	};

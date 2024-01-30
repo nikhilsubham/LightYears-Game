@@ -16,7 +16,7 @@ namespace ly
 		AssetManager();
 
 	private:
-		static unique<AssetManager> assetManager;
+		static std::unique_ptr<AssetManager> assetManager;
 		Dictionary<std::string, shared<sf::Texture>> mLoadedTextureMap;
 		std::string mRootDirectory;
 	};
