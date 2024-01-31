@@ -19,16 +19,26 @@ namespace ly
 	{
 		AssetManager::get().SetAssetRootDirectory(GetResourceDir());
 		std::weak_ptr<World> newWorld = LoadWorld<World>();
-		newWorld.lock()->SpawnActor<Actor>();
-		std::weak_ptr<PlayerSpaceship>  testPlayerSpceship = newWorld.lock()->SpawnActor<PlayerSpaceship>();
-		//testPlayerSpceship.lock()->setTexture("SpaceShooterRedux\\PNG\\playerShip1_blue.png");
+		testPlayerSpceship = newWorld.lock()->SpawnActor<PlayerSpaceship>();
 		testPlayerSpceship.lock()->SetActorLocation(sf::Vector2f(325.f, 450.f));
 		testPlayerSpceship.lock()->SetActorRotation(360.f);
 		//testPlayerSpceship.lock()->SetVelocity(sf::Vector2f(0.f, -200.f));
+
+		std::weak_ptr<Spaceship>  testSpceship = newWorld.lock()->SpawnActor<Spaceship>("SpaceShooterRedux\\PNG\\playerShip1_blue.png");
+		//testSpceship.lock()->setTexture("SpaceShooterRedux\\PNG\\playerShip1_blue.png"); //Not needed as we can pass in constructor only
+		testSpceship.lock()->SetActorLocation(sf::Vector2f(100.f, 50.f));
+		counter = 0.f;
 	}
 
 	void GameApplication::Tick(float deltaTime)
 	{
-		
+		counter += deltaTime;
+		if (counter > 10.f)
+		{
+			if (!testPlayerSpceship.expired())
+			{
+				testPlayerSpceship.lock()->Destroy();
+			}
+		}
 	}
 }

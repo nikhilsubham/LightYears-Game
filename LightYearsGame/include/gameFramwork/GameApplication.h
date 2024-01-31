@@ -12,7 +12,7 @@ namespace ly
 		GameApplication();
 		virtual void Tick(float deltaTime) override;
 	private:
-		//float counter;
+		float counter;
 		weak<PlayerSpaceship> testPlayerSpceship;
 	};
 }

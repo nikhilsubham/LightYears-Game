@@ -1,8 +1,11 @@
+#include <box2D/b2_body.h>
+
 #include "framwork/Actor.h"
 #include "framwork/Core.h"
 #include "framwork/AssetManager.h"
 #include "framwork/MathUtility.h"
 #include "framwork/World.h"
+#include "framwork/PhysicsSystem.h"
 
 namespace ly
 {
@@ -10,7 +13,9 @@ namespace ly
 		: mOwningWorld(owningWorld),
 		mHasBeganPlay(false),
 		mSprite(),
-		mTexture()
+		mTexture(),
+		mPhysicBody{ nullptr },
+		mPhysicsEnabled{ false }
 	{
 		setTexture(texturePath);
 	}
@@ -70,11 +75,13 @@ namespace ly
 	void Actor::SetActorLocation(const sf::Vector2f& newLoc)
 	{
 		mSprite.setPosition(newLoc);
+		UpdatePhysicsBodyTransform();
 	}
 
 	void Actor::SetActorRotation(float newRot)
 	{
 		mSprite.setRotation(newRot);
+		UpdatePhysicsBodyTransform();
 	}
 
 	void Actor::AddActorLocationOffset(const sf::Vector2f& offsetAmt)
@@ -117,6 +124,36 @@ namespace ly
 		return mOwningWorld->GetWindowSize();
 	}
 
+	void Actor::InitiallizePhyics()
+	{
+		if (!mPhysicBody)
+		{
+			mPhysicBody = PhysicsSystem::Get().AddListener(this);
+		}
+	}
+
+	void Actor::UnInitializePhysics()
+	{
+		if (mPhysicBody)
+		{
+			PhysicsSystem::Get().RemoveListener(mPhysicBody);
+			//mPhysicBody->GetUserData().pointer = reinterpret_cast<uintptr_t>(nullptr);
+			mPhysicBody = nullptr;
+		}   
+	} 
+
+	void Actor::UpdatePhysicsBodyTransform()
+	{
+		if (mPhysicBody)
+		{
+			float physicsScale = PhysicsSystem::Get().GetPhysicsScale();
+			b2Vec2 pos{ GetActorLocation().x * physicsScale, GetActorLocation().y * physicsScale };
+			float rotation = DegreesToRadians(GetActorRotation());
+
+			mPhysicBody->SetTransform(pos, rotation);
+		}
+	}
+
 
 	bool Actor::IsActorOutofWindowBounds() const
 	{
@@ -149,6 +186,35 @@ namespace ly
 		}
 
 		return false;
+	}
+
+	void Actor::SetEnablePhysics(bool enable)
+	{
+		mPhysicsEnabled = enable;
+		if (mPhysicsEnabled)
+		{
+			InitiallizePhyics();
+		}
+		else
+		{
+			UnInitializePhysics();
+		}
+	}
+
+	void Actor::OnActorBeginOverlap(Actor* other)
+	{
+		LOG("Overlapped");
+	}
+
+	void Actor::OnActorEndOverlap(Actor* other)
+	{
+		LOG("Overlap finished");
+	}
+
+	void Actor::Destroy()
+	{
+		UnInitializePhysics();
+		Object::Destroy();
 	}
 
 	void Actor::CenterPivot()

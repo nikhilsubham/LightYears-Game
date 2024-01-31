@@ -6,7 +6,7 @@ namespace ly
 	{
 	public:
 		Object();
-		void Destroy();
+		virtual void Destroy();
 		virtual ~Object();
 
 		bool isPendigDestroy() const { return mIsPendigDestroy; }

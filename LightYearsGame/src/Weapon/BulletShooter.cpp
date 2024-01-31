@@ -7,7 +7,7 @@ namespace ly
 	BulletShooter::BulletShooter(Actor* owner)
 		:Shooter(owner),
 		mCooldownClock(),
-		mCooldownTime(0.2f)
+		mCooldownTime(0.15f)
 	{
 
 	}

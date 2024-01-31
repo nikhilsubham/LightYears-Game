@@ -2,6 +2,7 @@
 #include<SFML/Graphics.hpp>
 #include "framwork/Core.h"
 #include "framwork/Object.h"
+class b2Body;
 
 namespace ly
 {
@@ -33,8 +34,15 @@ namespace ly
 		World* GetWorld() const { return mOwningWorld; };
 
 		bool IsActorOutofWindowBounds() const;
+		void SetEnablePhysics(bool enable);
+		virtual void OnActorBeginOverlap(Actor* other);
+		virtual void OnActorEndOverlap(Actor* other);
+		virtual void Destroy() override;
 
 	private:
+		void InitiallizePhyics();
+		void UnInitializePhysics();
+		void UpdatePhysicsBodyTransform();
 		void CenterPivot();
 		World* mOwningWorld;
 		bool mHasBeganPlay;
@@ -42,6 +50,9 @@ namespace ly
 		sf::Sprite mSprite;
 		//sf::Texture mTexture;
 		shared<sf::Texture> mTexture;
+
+		b2Body* mPhysicBody;
+		bool mPhysicsEnabled;
 	};
 }
 

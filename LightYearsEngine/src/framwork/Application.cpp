@@ -1,6 +1,7 @@
 #include "framwork/Application.h"
 #include "framwork/Core.h"
 #include "framwork/World.h"
+#include "framwork/PhysicsSystem.h"
 #include "framwork/AssetManager.h"
 
 namespace ly
@@ -54,6 +55,9 @@ namespace ly
 			currentWorld->beginPlayInternal();
 			currentWorld->TickInternal(deltaTime);
 		}
+
+		PhysicsSystem::Get().Step(deltaTime);
+
 		if (mCleanCycleClock.getElapsedTime().asSeconds() >= mCleanCycleInterval)
 		{
 			mCleanCycleClock.restart();
